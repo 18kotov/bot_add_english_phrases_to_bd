@@ -7,8 +7,8 @@ logger = get_logger(__name__)
 
 
 @post_query
-def delete_phrase(english: str)->str:
+def delete_phrase(answer: str)->str:
     table = os.environ.get('TABLE')
-    query = f"DELETE FROM {table} WHERE english = '{english}';"
+    query = f"DELETE FROM {table} WHERE answer = '{answer}';"
     return query
 

@@ -11,8 +11,7 @@ from database_functions.sql_edit import delete_phrase
 from database_functions.sql_select import get_quantity_phrases_add_today
 
 user1 = int(os.getenv('user1'))
-user2 = int(os.getenv('user2'))
-users = {user1, user2}
+users = {user1}
 
 
 router = Router()
@@ -35,7 +34,7 @@ async def get_start(message: Message, state: FSMContext):
 @router.message(AddPhrase.add_english, F.from_user.id.in_(users))
 async def get_cost(message: Message, state: FSMContext):
     if check_english_phrase(message.text.lower()):
-        await state.update_data(english=message.text.lower().replace("'", '"'))
+        await state.update_data(answer=message.text.lower().replace("'", '"'))
         await message.answer(
             text='ок. теперь добавь перевод на русский язык'
 
@@ -51,12 +50,12 @@ async def get_cost(message: Message, state: FSMContext):
 @router.message(AddPhrase.add_russian, F.from_user.id.in_(users))
 async def get_category_cost(message: Message, state: FSMContext):
     if check_russian_phrase(message.text.lower()):
-        await state.update_data(russian=message.text.lower())
+        await state.update_data(ask=message.text.lower())
         user_data = await state.get_data()
         await message.answer(
-            text=f"добавляем фразу {user_data['english']} / {user_data['russian']}"
+            text=f"добавляем фразу {user_data['answer']} / {user_data['ask']}"
         )
-        add_phrases(user_data['english'], user_data['russian'])
+        add_phrases(user_data['answer'], user_data['ask'])
         await state.clear()
     else:
         await message.answer(
@@ -77,9 +76,9 @@ async def get_category_cost(message: Message, state: FSMContext):
         await state.update_data(english=message.text.lower().replace("'", '"'))
         user_data = await state.get_data()
         await message.answer(
-            text=f"удалил фразу {user_data['english']}"
+            text=f"удалил фразу {user_data['answer']}"
         )
-        delete_phrase(user_data['english'])
+        delete_phrase(user_data['answer'])
         await state.clear()
     else:
         await message.answer(

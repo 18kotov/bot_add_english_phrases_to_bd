@@ -5,9 +5,9 @@ from database_functions.commucation_with_db import post_query
 logger = get_logger(__name__)
 
 @post_query
-def add_phrases(english: str, russian: str):
+def add_phrases(ask: str, answer: str):
     table = os.environ.get('TABLE')
-    query = f"INSERT INTO {table} (english, russian) VALUES('{english}','{russian}');"
+    query = f"INSERT INTO {table} (ask, answer) VALUES('{ask}','{answer}');"
     return query
 
 
