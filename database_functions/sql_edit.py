@@ -10,5 +10,6 @@ logger = get_logger(__name__)
 def delete_phrase(answer: str)->str:
     table = os.environ.get('TABLE')
     query = f"DELETE FROM {table} WHERE answer = '{answer}';"
+    logger.debug(query)
     return query
 

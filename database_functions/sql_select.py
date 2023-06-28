@@ -8,8 +8,9 @@ logger = get_logger(__name__)
 @get_data
 def get_quantity_phrases_add_today() -> str:
     table = os.environ.get('TABLE')
-    quite = f"SELECT COUNT(*) AS row_count FROM {table} WHERE date = CURRENT_DATE;"
-    return quite
+    query = f"SELECT COUNT(*) AS row_count FROM {table} WHERE date = CURRENT_DATE;"
+    logger.debug(query)
+    return query
 
 
 

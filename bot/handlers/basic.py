@@ -55,7 +55,7 @@ async def get_category_cost(message: Message, state: FSMContext):
         await message.answer(
             text=f"добавляем фразу {user_data['answer']} / {user_data['ask']}"
         )
-        add_phrases(user_data['answer'], user_data['ask'])
+        add_phrases(ask=user_data['ask'], answer=user_data['answer'])
         await state.clear()
     else:
         await message.answer(
